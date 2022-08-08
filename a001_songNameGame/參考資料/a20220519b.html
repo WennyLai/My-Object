@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo_class</title>
+</head>
+<body>
+    <div id="debug"></div>
+
+    <script>
+/*---------------------------------------------------------*/
+        //建立新類別，並延用舊類別的項目
+            //先建立一個類別
+            class animal{
+                makeSound(x){
+                    alert("Animal:"+x+"!")
+                }
+                constructor(weightvalue,placevalue){  //直接放入參數並設定預設值
+                    this._weight=10; 
+                    this.weight=weightvalue;
+                    this._place="Earth";
+                    this.place=placevalue;
+                }
+                get weight(){  
+                    return this._weight;
+                }
+                set weight(value){  
+                    if (value>0) this._weight=value;
+                    else {alert("Wrong Weight!");
+                    this._weight="Error"}
+                }
+                get place(){  
+                    return this._place;
+                }
+                set place(value){  
+                    this._place=value;
+            
+            
+                }
+            }
+//
+                class CAnimal {
+                constructor(weightValue = 1) {
+                    this._weight = 0;
+                    this.weight = weightValue;
+                }
+                get weight() {
+                    return this._weight;
+                }
+                set weight(weightValue) {
+                    if (weightValue > 0) {
+                        this._weight = weightValue;
+                    }
+                }
+                makeSound() {
+                    alert("Animal: ...");
+                }
+            }
+
+
+            //建立新類別，並使用extend延伸類別 用super.程式(參數)跟super(建構式參數)
+            class animal_new extends CAnimal{
+                // makeSound(x){
+                //     super.makeSound(x);   //使用super.表示繼承父屬性 但只能繼承屬性，不繼承變數或值
+                // }
+                // constructor(weightvalue,placevalue,heightvalue=0){
+                //     super(weightvalue,placevalue);
+                //     this._height=0;
+                //     this.height=heightvalue;  //除了引用舊有資料，也可以新增!
+
+                // }
+                // get height(){
+                //     return this._height;
+                // }
+                // set height(value){
+                //     if(value>0) this._height=value;
+                //     else {alert("Wrong Height!")
+                //     return this._height="Error"}
+
+                // }
+
+            }
+            var obj1=new animal_new(); //如果想沿用預設值的東西，不可不填或填入空值，可以填入undifined決定不定義參數
+            obj1.makeSound("meow");
+            debug.innerText="weight:"+obj1.weight+"\n"+"place:"+obj1.place+"\n"+"height:"+obj1.height
+
+            /*---------------------------------------------------------*/
+            // //當然，也可以直接改寫不同的內容
+            // class animal_new extends animal{
+            //     makeSound(x){
+            //     alert("Animal:It's Sound is "+x+"!")
+            //     }
+            // }
+            // obj1=new animal_new();
+            // obj1.makeSound("meow")
+
+
+
+
+    </script>
+    
+</body>
+</html>

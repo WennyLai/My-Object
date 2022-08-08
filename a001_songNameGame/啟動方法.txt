@@ -1,0 +1,13 @@
+1. 在本資料夾開啟cmd
+2. 輸入 nodemon a20220523.js
+
+
+
+3. npm install localtunnel    // 架外部網站連結(使用localtunnel)
+
+lt --port 3302
+
+
+
+
+4. ipconfig       // 區域連線測試，找到網路IP後用IP連線

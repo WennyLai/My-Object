@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/three.min.js"></script>
+
+</head>
+
+<body>
+    <canvas id="surface" width="600" height="500"></canvas>
+    <script>
+        var ball = {  // 設定一個球的空間與屬性與值
+            x: 200,
+            y: 200,
+            r: 10,
+            vx: 6,
+            vy: 5
+        }
+
+        var ctx = surface.getContext('2d');
+
+//         setInterval(() => {
+//             if (_KeyFlag == "up" ) {
+//                 ball.vy = Math.abs(ball.vy) * -1;
+//             }
+
+//             //處理飛上去
+//             if (_KeyFlag == "down") {
+//                 ball.vy = Math.abs(ball.vy);
+//             }
+
+//             //處理跑去右側
+//             if (_KeyFlag == "left") {
+//                 ball.vx = Math.abs(ball.vx) * -1;
+//             }
+
+//             //處理跑去左側
+//             if (_KeyFlag == "right") {
+//                 ball.vx = Math.abs(ball.vx) ;
+//             }
+
+
+
+//             //處理掉下去
+//             if (ball.y + ball.r > surface.height) {
+//                 ball.vy = Math.abs(ball.vy) * -1;
+//             }
+
+//             //處理飛上去
+//             if (ball.y - ball.r < 0 ) {
+//                 ball.vy = Math.abs(ball.vy);
+//             }
+
+//             //處理跑去右側
+//             if (ball.x + ball.r > surface.width ) {
+//                 ball.vx = Math.abs(ball.vx) * -1;
+//             }
+
+//             //處理跑去左側
+//             if (ball.x - ball.r < 0 ) {
+//                 ball.vx = Math.abs(ball.vx) ;
+//             }
+
+
+
+//             ball.x += ball.vx;
+//             ball.y += ball.vy;
+//             ctx.beginPath();
+
+//             // 畫圖黑底
+//             ctx.save();
+//             ctx.fillStyle = "black";
+//             ctx.fillRect(0, 0, surface.width, surface.height);
+//             ctx.restore();
+
+//             // Draw bll
+//             ctx.save();
+//             ctx.fillStyle = "#fff";
+//             ctx.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
+//             ctx.fill();
+//             ctx.restore();
+
+//         }, 1000 / 60);
+
+//         // up: 38, down: 40, L: 37, R: 39
+//   // document.onkeydown = function() {
+//   //  alert(event.keyCode);
+//   // }
+
+
+        
+//         var _KeyFlag="none";  // 宣告_KeyFlag="none" 變數等於空值(宣告才能使用)
+
+//         document.onkeyup = function() {
+//             _KeyFlag="none";
+//         }
+
+//         document.onkeydown = function() {  //按下去時，要做的方法
+//   if(event.keyCode == 37) {
+//             _KeyFlag = "left"
+//         }
+//         if(event.keyCode == 38) {
+//             _KeyFlag = "up"
+//         }
+//         if(event.keyCode == 39) {
+//             _KeyFlag = "right"
+//         }
+//         if(event.keyCode == 40) {
+//             _KeyFlag = "down"
+//         }
+//         }    
+
+//新增使用鍵盤干涉球體運轉的方向：解法二（原程式只考慮到當下的動作，可能會被其他動作影響數據）
+var _keyflag ="none";
+
+document.onkeydown=function(){  //透過在document.onkeydown的方法，在文件執行使用鍵盤後的效果
+    // alert(event.keyCode);  //經此方法後，可以測試到keycode left=37,up=38.right=39,down=40;
+    if(event.keyCode==37)
+    {_keyflag='left'}
+    else if(event.keyCode==38)
+    {_keyflag='up'}
+    if(event.keyCode==39)
+    {_keyflag='right'}
+    else if(event.keyCode==40)
+    {_keyflag='down'}
+}
+
+//使用一個變數定義37.38.39.40成左上右下，比直接用數字來得保險
+
+setInterval(function(){  //setInterval:
+    if (ball.y+ball.r>surface.height||_keyflag=='up')  //y的座標+半徑=畫布surface的高
+    {ball.vy=Math.abs(ball.vy)* -1;}  //vy會變成負的，讓球碰到底部往上彈 //Math.abs():傳回絕對值
+    else if(ball.y<ball.r||_keyflag=='down')
+    {ball.vy=Math.abs(ball.vy);}    //vx就會等於原本的值，讓球碰到頂部往下彈
+    if(ball.x+ball.r>surface.width||_keyflag=='left')
+    {ball.vx=Math.abs(ball.vx)*-1;}  //vy會變成負的，讓球碰到右邊往左彈 
+    else if(ball.x<ball.r||_keyflag=='right')
+    {ball.vx=Math.abs(ball.vx)} //vy就會等於原本的值，讓球碰到左邊往右彈
+    ball.x=ball.x+ball.vx;
+    ball.y+=ball.vy;
+    ctx.beginPath();  //每一次路徑結束後要重製，因為在同一個程式中的路徑中會互相影響
+    ctx.fillRect(0,0,600,400); //在畫上畫布，營造每一次畫一個圓就覆蓋掉一次，好像圓在移動
+    ctx.arc(ball.x,ball.y,ball.r,0,2*Math.PI);  //畫一個圓(圓心x,圓心y,半徑,圓角度的起始,圓角度的結束)
+    ctx.stroke();
+    
+},1000/60);  //1000:milliseconds/30:30次(一秒鐘做30次)
+//把條件用||(or)帶入
+
+//如果只做到這邊就存檔，會發現鍵盤使用後會一直維持在固定方式。
+//因為我們只設定了鍵盤按下後的反應，沒定義鍵盤案完後的反應
+
+document.onkeyup=function(){  //透過在document.onkeydown的方法，在文件執行使用鍵盤後的效果
+    // alert(event.keyCode);  //經此方法後，可以測試到keycode left=37,up=38.right=39,down=40;
+    _keyflag="none";
+}
+
+//加入按下後的反應 onkeyup
+    </script>
+
+</body>
+
+</html>
