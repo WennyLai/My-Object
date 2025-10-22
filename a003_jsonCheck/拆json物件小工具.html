@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拆json物件小工具</title>
+    <style>
+        body div, body button {
+            font-size: 30px;
+        }
+
+        body button {
+            font-size: 20px;
+        }
+
+        .bigTextarea {
+            font-size: 25px;
+            width: 80vw;
+            height: 30vh;
+        }
+
+    </style>
+    <script src="./myTool.js"></script>
+</head>
+<body>
+    <div>原理：就是丟一串json在輸入區，按下解析紐，就可以在下方條列出內含的所有屬性<br />
+        <span style="color: red;">因為很麻煩，所以我沒有做除錯機制，格式不對會直接炸開</span>
+    </div>
+    <h3>輸入區</h3>
+    <textarea class="bigTextarea" id="txtInput"></textarea>
+    <br />
+    <button onclick='getAllProperties()' >點我解析</button>
+	<button onclick='stringToCode()' >多包一層，幫我拆成物件</button>
+    <button onclick='clearValue()' >清空輸入</button>
+    <button onclick='showExample()' >我手殘，給我一個範例</button>
+	<button onclick='showExample2()' >讓我試試多包一層的感覺</button>
+    <br />
+    <h3>輸出區</h3>
+    <textarea class="bigTextarea" id="txtOutput"></textarea>
+</body>
+</html>
